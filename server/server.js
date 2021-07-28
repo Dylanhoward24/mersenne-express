@@ -3,6 +3,8 @@ console.log('Look ma, my first express app!');
 // load the express library
 // from node_modules/express
 const express = require('express');
+// load the body parser module
+const bodyParser = require('body-parser');
 
 // create our "app" (server)
 const app = express();
@@ -29,6 +31,12 @@ const quotes = [
 // aka "static assets"
 app.use(express.static('./server/public'));
 
+// setup body-parser
+// tells express how to read data from the client
+// either as JSON, or url-encoded
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 // listen for requests
 const port = 5000;
 app.listen(port, function() {
@@ -46,4 +54,35 @@ app.get('/quotes', function(req, res) {
     // send information back (will appear on DOM)
     // an array of quote objects
     res.send(quotes);
+});
+
+// GET /first-quote
+app.get('/first-quote', function(req, res) {
+    res.send(quotes[0]);
+});
+
+// POST /quotes
+app.post('/quotes', function(req, res) {
+    console.log('woohoo, we got a new quote');
+
+    // body parser gives us req.body
+    // which includes
+    console.log('req.body', req.body);
+    let newQuote = req.body;
+
+    // validate our new quote
+    if (!newQuote.author || !newQuote.text) {
+        // set status code to 400 (client messed up)
+        // and send back a useful message in the response body
+        res.status(400).send({
+            message: 'Missing a required field! Try again, and try harder.'
+        });
+        // end the function!
+        return;
+    }
+
+    quotes.push(newQuote);
+    
+    // send back a created status
+    res.sendStatus(201); // 201 Created
 });

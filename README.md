@@ -95,6 +95,27 @@ app.post('/quotes',...)
 
 app.delete('/quotes',...)
 ```
+## Body (Requests & Responses)
+
+The body is part of the request that contains the actual data that we're passing back and forth.
+
+## Headers (Requests & Responses)
+
+Extra meta-data that gets sent along with your request or response.
+
+eg.
+`Content-Type: application/json`
+
+## Status Code (Responses only)
+
+A number that represents the status of the request
+
+Common Status Code:
+- 200 OK
+- 201 Created
+- 400 Bad Request - The client messed up, sent bad data, etc
+- 404 Not Found - Probably the wrong url
+- 500 Server Error - Probably a JS bug in your server code
 
 ## Endpoint
 
