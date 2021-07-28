@@ -4,6 +4,8 @@
 npm init --yes
 npm install express
 
+npm install body-parser (later)
+
 # exit out of server
 control+c
 
